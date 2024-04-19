@@ -1,7 +1,23 @@
 /**
  * Created by jjglyn on 12/19/16.
  */
-import stringHash from 'string-hash';
+
+//  import stringHash from 'string-hash';
+
+function stringHash(str) {
+    const hash = 5381,
+        i = str.length;
+
+    while (i) {
+        hash = (hash * 33) ^ str.charCodeAt(--i);
+    }
+
+    /* JavaScript does bitwise operations (like XOR, above) on 32-bit signed
+     * integers. Since we want the results to be always positive, convert the
+     * signed int to an unsigned by doing an unsigned bitshift. */
+    return hash >>> 0;
+}
+
 
 const counter = (() => {
     let count = 0;
@@ -62,7 +78,7 @@ export default class ColumnResizer {
             for (let i = 0; i < t.columnCnt; i++) {
                 t.columns[i].style.width = Math.round(1000 * t.columns[i].w / mw) / 10 + '%';
                 t.columns[i].locked = true;
-                t.opt.currentWidths[i] = 
+                t.opt.currentWidths[i] =
                     Number(window.getComputedStyle(t.columns[i])
                         .width.replace(/px/, '')).valueOf();
             }
@@ -203,6 +219,7 @@ export default class ColumnResizer {
         if (options.disable) {
             return this.destroy();
         }
+
         const tb = this.tb;
         const id = tb.getAttribute(this.ID) || this.RESIZABLE + counter();
         if (!tb.matches('table') || tb.extended && !options.partialRefresh) {
@@ -455,7 +472,7 @@ export default class ColumnResizer {
         tb.borderSpace = controller.borderSpace;
         const cg = Array.from(tb.querySelectorAll('col'));
         tb.columnGrp = this.filterInvisible(cg, true);
-        tb.columnGrp.forEach( (col, index) => {
+        tb.columnGrp.forEach((col, index) => {
             col.removeAttribute('width');
             col.style.width = controller.columnGrp[index].style.width;
         });
@@ -495,12 +512,12 @@ export default class ColumnResizer {
                     handle.innerHTML = '';
                 }
             }
-            handle.addEventListener('touchstart', this.onGripMouseDown, {capture: true, passive: true});
+            handle.addEventListener('touchstart', this.onGripMouseDown, { capture: true, passive: true });
             handle.addEventListener('mousedown', this.onGripMouseDown, true);
 
             if (!dc) {
                 handle.classList.remove('grip-disabledgrip');
-                handle.addEventListener('touchstart', this.onGripMouseDown, {capture: true, passive: true});
+                handle.addEventListener('touchstart', this.onGripMouseDown, { capture: true, passive: true });
                 handle.addEventListener('mousedown', this.onGripMouseDown, true);
             } else {
                 handle.classList.add('grip-disabledgrip');
@@ -518,7 +535,7 @@ export default class ColumnResizer {
             t.opt.currentWidths[index] = column.w;
             column.style.width = column.w + this.PX;
             column.removeAttribute('width');
-            handle.data = {i: index, t: t.getAttribute(this.ID), last: index === t.columnCnt - 1};
+            handle.data = { i: index, t: t.getAttribute(this.ID), last: index === t.columnCnt - 1 };
             t.grips.push(handle);
             t.columns.push(column);
         });
