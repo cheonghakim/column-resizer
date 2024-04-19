@@ -5,7 +5,7 @@
 //  import stringHash from 'string-hash';
 
 function stringHash(str) {
-    const hash = 5381,
+    let hash = 5381,
         i = str.length;
 
     while (i) {
