@@ -654,7 +654,7 @@ export default class ColumnResizer {
             }
         } else if (options.overflow) {
             //if overflow is set, increment min-width to force overflow
-            t.style.minWidth = (t.tableWidth + inc) + this.PX;
+            t.style.width = (t.tableWidth + inc) + this.PX;
         }
         if (isOver) {
             c0.w = w0;
