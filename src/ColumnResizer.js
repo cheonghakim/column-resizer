@@ -245,6 +245,7 @@ export default class ColumnResizer {
         this.extendTable(headers);
         if (options.remoteTable && options.remoteTable.matches('table')) {
             const remoteHeaders = this.getTableHeaders(tb.opt.remoteTable);
+            console.log(headers.length,remoteHeaders.length);
             if (headers.length === remoteHeaders.length) {
                 this.extendRemoteTable(tb.opt.remoteTable, remoteHeaders, tb);
             } else {
@@ -467,6 +468,7 @@ export default class ColumnResizer {
             column.removeAttribute('width');
             tb.columns.push(column);
         });
+        console.log(tb.columns);
         tb.tableWidth = controller.tableWidth;
         tb.cellSpace = controller.cellSpace;
         tb.borderSpace = controller.borderSpace;
