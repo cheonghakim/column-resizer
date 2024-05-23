@@ -46,7 +46,7 @@ export default class ColumnResizer {
         }
         this.grip = null;
         this.tb = tb;
-        window.addEventListener('resize', this.onResize);
+        
         // Polyfill for IE
         if (!Element.prototype.matches) {
             Element.prototype.matches = Element.prototype.msMatchesSelector;
@@ -90,8 +90,6 @@ export default class ColumnResizer {
         }
         t.classList.add(this.RESIZABLE);
         this.syncGrips();
-
-        this.tb = t;
     };
 
     /**
@@ -123,7 +121,6 @@ export default class ColumnResizer {
             }
         }
         e.preventDefault(); //prevent text selection
-        this.tb = t;
     };
 
     /**
@@ -254,6 +251,8 @@ export default class ColumnResizer {
                 console.warn('column count for remote table did not match');
             }
         }
+
+        window.addEventListener('resize', this.onResize);
         return oldOptions;
     };
 
@@ -279,7 +278,6 @@ export default class ColumnResizer {
         });
         //allow table width changes
         t.classList.add(this.FLEX);
-        this.tb = t;
     };
 
     /**
@@ -300,7 +298,6 @@ export default class ColumnResizer {
         if (!t.opt.fixed) {
             store[t.getAttribute(this.ID)] += ';' + window.getComputedStyle(t).width.replace(/px/, '');
         }
-        this.tb = t;
     };
 
     /**
@@ -316,7 +313,6 @@ export default class ColumnResizer {
             t.grips[i].style.left = cRect.left - tRect.left + c.offsetWidth + t.cellSpace / 2 + this.PX;
             t.grips[i].style.height = (t.opt.headerOnly ? t.columns[0].offsetHeight : t.offsetHeight) + this.PX;
         }
-        this.tb = t;
     };
 
     /**
@@ -567,7 +563,6 @@ export default class ColumnResizer {
             t.classList.add(this.FLEX);
         }
         this.syncGrips();
-        this.tb = t;
     };
 
     /**
@@ -600,8 +595,6 @@ export default class ColumnResizer {
                 t.columnGrp[i].style.width = 100 * Number(w[i]).valueOf() / Number(w[t.columnCnt]).valueOf() + '%';
             }
         }
-
-        this.tb = t;
     };
 
     /**
