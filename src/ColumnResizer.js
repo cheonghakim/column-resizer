@@ -69,6 +69,7 @@ export default class ColumnResizer {
     onResize = () => {
         const t = this.tb;
         t.classList.remove(this.RESIZABLE);
+        console.log(t);
         if (t.opt.fixed) {
             t.tableWidth = Number(window.getComputedStyle(t).width.replace(/px/, '')).valueOf();
             let mw = 0;
