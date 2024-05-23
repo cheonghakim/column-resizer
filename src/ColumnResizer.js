@@ -90,6 +90,8 @@ export default class ColumnResizer {
         }
         t.classList.add(this.RESIZABLE);
         this.syncGrips();
+
+        this.tb = t;
     };
 
     /**
@@ -121,6 +123,7 @@ export default class ColumnResizer {
             }
         }
         e.preventDefault(); //prevent text selection
+        this.tb = t;
     };
 
     /**
@@ -245,7 +248,6 @@ export default class ColumnResizer {
         this.extendTable(headers);
         if (options.remoteTable && options.remoteTable.matches('table')) {
             const remoteHeaders = this.getTableHeaders(tb.opt.remoteTable);
-            console.log(headers.length,remoteHeaders.length);
             if (headers.length === remoteHeaders.length) {
                 this.extendRemoteTable(tb.opt.remoteTable, remoteHeaders, tb);
             } else {
@@ -277,6 +279,7 @@ export default class ColumnResizer {
         });
         //allow table width changes
         t.classList.add(this.FLEX);
+        this.tb = t;
     };
 
     /**
@@ -297,6 +300,7 @@ export default class ColumnResizer {
         if (!t.opt.fixed) {
             store[t.getAttribute(this.ID)] += ';' + window.getComputedStyle(t).width.replace(/px/, '');
         }
+        this.tb = t;
     };
 
     /**
@@ -312,6 +316,7 @@ export default class ColumnResizer {
             t.grips[i].style.left = cRect.left - tRect.left + c.offsetWidth + t.cellSpace / 2 + this.PX;
             t.grips[i].style.height = (t.opt.headerOnly ? t.columns[0].offsetHeight : t.offsetHeight) + this.PX;
         }
+        this.tb = t;
     };
 
     /**
@@ -468,7 +473,6 @@ export default class ColumnResizer {
             column.removeAttribute('width');
             tb.columns.push(column);
         });
-        console.log(tb.columns);
         tb.tableWidth = controller.tableWidth;
         tb.cellSpace = controller.cellSpace;
         tb.borderSpace = controller.borderSpace;
@@ -563,6 +567,7 @@ export default class ColumnResizer {
             t.classList.add(this.FLEX);
         }
         this.syncGrips();
+        this.tb = t;
     };
 
     /**
@@ -595,6 +600,8 @@ export default class ColumnResizer {
                 t.columnGrp[i].style.width = 100 * Number(w[i]).valueOf() / Number(w[t.columnCnt]).valueOf() + '%';
             }
         }
+
+        this.tb = t;
     };
 
     /**
